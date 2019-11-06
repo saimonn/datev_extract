@@ -1,1 +1,27 @@
-/node_modules/
+# OS stuff for macos/windows/linux
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+.apdisk
+.afpDeleted*
+Network Trash Folder
+Temporary Items
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Application
+download/*
+!download/.gitkeep
+node_modules/
+
+# IDEs
+.idea/
+.project
+.settings/
