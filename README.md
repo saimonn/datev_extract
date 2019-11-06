@@ -1,25 +1,27 @@
 # datev_extract
-This npm package is a simple Extractor for Salary PDFs from the DateV platform arbeitnehmeronline.de
-It uses puppeteer for downloading the pdf's and Readline-sync for getting the user input from the CLI.
+
+Downloads salary PDFs from DATEV ANO https://www.datev.de/ano/
+
+It uses puppeteer for downloading and readline-sync for getting the user input from the CLI.
+
+**Notice:** Only smsTAN is supported as login-method.
 
 ## Setup
 
-1. Clone the Github Repo in a Directory of your choice via
+1. Clone the repository:
 
-> git clone https://github.com/ThomasSchmidtGF/datev_extract.git
+> git clone https://github.com/nurtext/datev_extract.git
 
-2. Navigate in your chosen Directory, open a CLI and install the package via
+2. Navigate to the chosen directory, open a CLI and install the dependencies using:
 
-> npm i
-
-3. Put your Login Credentials into the cred.js file (no worries, nobody except for you, puppeteer and datev is going to see them)
+> npm ci
 
 ## Usage
 
-Just open a CLI and enter
+Just open a CLI and type:
 
-> npm lohn.js
+> npm start
 
-Done! Your PDF is in your Downloads folder.
+Enter username, password and smsTAN when asked. Your document(s) can then be found within folder `download/`.
 
-If you want to see what the script is doing, open lohn.js with a editor and set the option "headless" to false.
+If you want to see what the script is actually doing, open `lohn.js` with a editor of your choice and set `headless` to `false` (line 26).
