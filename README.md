@@ -24,4 +24,4 @@ Just open a CLI and type:
 
 Enter username, password and smsTAN when asked. Your document(s) can then be found within folder `download/`.
 
-If you want to see what the script is actually doing, open `lohn.js` with a editor of your choice and set `headless` to `false` (line 26).
+If you want to see what the script is actually doing, open `datev.js` with a editor of your choice and set `headless` to `false` (line 8).

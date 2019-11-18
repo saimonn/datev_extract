@@ -1,9 +1,11 @@
 #!/usr/bin/env nodejs
 const fs = require('fs');
 const path = require('path');
+const clear = require('clear');
 const puppeteer = require('puppeteer');
 const readlineSync = require('readline-sync');
 
+const headless = true;
 const currentDirectory = path.resolve(__dirname);
 const downloadDirectory = path.resolve(currentDirectory, 'download/');
 
@@ -26,9 +28,12 @@ function delay(time) {
 }
 
 async function run() {
+  // Clear screen
+  clear();
+
   // Create headless browser
   const browser = await puppeteer.launch({
-    headless: true
+    headless: headless
   });
 
   // Create new page and fetch credentials
@@ -43,7 +48,6 @@ async function run() {
   await page.setViewport({ width: 1920, height: 1024 });
   await page.goto('https://www.datev.de/ano/');
   await page.click('a#smsTANLogin.loginLink');
-  //await page.waitForNavigation();
 
   // Enter credentials and submit form
   await page.waitForSelector('input#username');
@@ -60,13 +64,15 @@ async function run() {
   await page.click('button#formButton[data-tag="medsecSendForm"]');
 
   // Wait for page load and switch to documents
-  await delay(5000);
+  console.log('Please wait…');
+  await delay(10000);
   await page.waitForSelector('#navSTARTHEADLINEDOCS > a');
   await page.click('#navSTARTHEADLINEDOCS > a');
   
   // Wait until documents are loaded and click the checkbox
   await page.waitForSelector('.analysisGrid table > tbody > tr > td:nth-child(2) > div.analysisCaption');
   await page.click('input#analysesCheckAll');
+  console.log('Downloading…');
 
   await Promise.all([
     page.click("#btnDownloadZip"),
@@ -82,6 +88,7 @@ async function run() {
             if (event === 'rename' && filename === downloadFilename) {
               if (fs.existsSync(path.resolve(downloadDirectory, downloadFilename))) {
                 page.click('#top > div.infobar > ul > li:nth-child(2) > a').then(() => {
+                  console.log(`Saved as ./download/${downloadFilename}`);
                   browser.close().then(process.exit());
                 });
               }
