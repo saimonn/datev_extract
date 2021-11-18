@@ -30,7 +30,7 @@ function getSMSTan() {
 }
 
 function delay(time) {
-  return new Promise(function(resolve) { 
+  return new Promise(function(resolve) {
     setTimeout(resolve, time);
   });
 }
@@ -41,17 +41,18 @@ async function run() {
 
   // Create headless browser
   const browser = await puppeteer.launch({
-    headless: headless
+    // headless: headless
+    headless: false
   });
 
   // Create new page and fetch credentials
   const page = await browser.newPage();
 
   // Set download path
-  await page._client.send('Page.setDownloadBehavior', { 
+  await page._client.send('Page.setDownloadBehavior', {
     behavior: 'allow', downloadPath: downloadDirectory
   });
-  
+ 
   // Landing page leads to another subdomain
   await page.setViewport({ width: 1920, height: 1024 });
   await page.goto('https://www.datev.de/ano/');
@@ -76,7 +77,7 @@ async function run() {
   await delay(10000);
   await page.waitForSelector('#navSTARTHEADLINEDOCS > a');
   await page.click('#navSTARTHEADLINEDOCS > a');
-  
+ 
   // Wait until documents are loaded and click the checkbox
   await page.waitForSelector('.analysisGrid table > tbody > tr > td:nth-child(2) > div.analysisCaption');
   await page.click('input#analysesCheckAll');
@@ -91,7 +92,7 @@ async function run() {
 
         if (contentType === 'application/octet-stream' && contentDisposition.indexOf('attachment; filename=') !== -1) {
           let downloadFilename = contentDisposition.match(/filename=\"(.+)?\"/i)[1];
-          
+         
           fs.watch(downloadDirectory, (event, filename) => {
             if (event === 'rename' && filename === downloadFilename) {
               if (fs.existsSync(path.resolve(downloadDirectory, downloadFilename))) {
