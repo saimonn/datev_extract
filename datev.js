@@ -10,11 +10,19 @@ const currentDirectory = path.resolve(__dirname);
 const downloadDirectory = path.resolve(currentDirectory, 'download/');
 
 function getUsername() {
-  return readlineSync.question('Please enter your username: '); 
+  if (process.env.DATEV_USERNAME) {
+    return process.env.DATEV_USERNAME }
+  else{
+    return readlineSync.question('Please enter your username: ');
+  }
 }
 
 function getPassword() {
-  return readlineSync.question('Please enter your password: ', { hideEchoBack: true }); 
+  if (process.env.DATEV_PASSWORD) {
+    return process.env.DATEV_PASSWORD }
+  else{
+    return readlineSync.question('Please enter your password: ', { hideEchoBack: true });
+  }
 }
 
 function getSMSTan() {
